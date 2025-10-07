@@ -1,4 +1,4 @@
-name: Daily Cyber News Post
+name: Cyber Vanguard Daily Poster
 
 on:
   schedule:
@@ -6,24 +6,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  post_news:
+  run-bot:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-    - name: Install dependencies
-      run: pip install -r requirements.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install python-dotenv feedparser requests
 
-    - name: Run Cyber Poster
-      env:
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        RSS_FEEDS: ${{ secrets.RSS_FEEDS }}
-        POSTED_FILE: posted_urls.txt
-      run: python cyber_poster.py
+      - name: Run Cyber Poster Bot
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RSS_FEEDS: ${{ secrets.RSS_FEEDS }}
+          POSTED_FILE: posted_urls.txt
+        run: python cyber_poster.py

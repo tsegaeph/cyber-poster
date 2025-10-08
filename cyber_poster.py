@@ -53,6 +53,7 @@ def send_telegram_message(title, summary, url):
     message = f"<b>{title}</b>\n\n{summary}\n\n<a href='{url}'>Read more</a>"
     res = requests.post(f"{BASE_API}/sendMessage", json={
         "chat_id": CHAT_ID,
+        "message_thread_id": int(os.getenv("NEWS_TOPIC_ID", "0")),
         "text": message,
         "parse_mode": "HTML",
         "disable_web_page_preview": False

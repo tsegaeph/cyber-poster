@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-"""
-Cyber Poster Bot — posts 1 new article per day to your channel.
-"""
+
 
 import os
 import random
